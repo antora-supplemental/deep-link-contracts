@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/antora-supplemental/deep-link-contracts/schemas/deep-link-contracts.schema.json",
+  "title": "Deep-link contracts",
+  "description": "Marketing URL ↔ docs co-variance. NOT a general link crawl.",
+  "type": "object",
+  "required": ["contracts"],
+  "properties": {
+    "version": { "type": "integer", "const": 1 },
+    "description": { "type": "string" },
+    "baseUrl": { "type": "string", "format": "uri" },
+    "contracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "externalUrl", "expected"],
+        "properties": {
+          "id": { "type": "string" },
+          "externalUrl": { "type": "string", "format": "uri" },
+          "expected": {
+            "type": "object",
+            "properties": {
+              "pageId": { "type": "string" },
+              "pubPath": { "type": "string" },
+              "url": { "type": "string" }
+            },
+            "anyOf": [
+              { "required": ["pageId"] },
+              { "required": ["pubPath"] },
+              { "required": ["url"] }
+            ]
+          },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

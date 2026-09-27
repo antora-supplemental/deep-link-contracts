@@ -1,0 +1,27 @@
+= Deep-link Contracts
+:description: Marketing URL ↔ docs path co-variance tests (NOT general link crawl).
+:page-orig-author: Ryan Johnson
+:page-last-edited: 2026-09-27
+
+**Deep-link contracts** assert that marketing / product / vanity URLs continue to resolve to the **intended docs pages** as site IA changes.
+
+This is **not** the same as outbound link validation (https://github.com/antora-supplemental/link-validator[link-validator] / asciidoc-link-validator). It does **not** crawl the whole site. Each contract is an explicit `{externalUrl → expected pageId|pubPath}` pair checked against a published site map or `--site-dir`.
+
+Support: support@devcentr.org
+
+== Install
+
+[source,bash]
+----
+pnpm add -D github:antora-supplemental/deep-link-contracts#v0.1.0
+----
+
+== Config
+
+See `deep-link-contracts.example.yml` and `schemas/deep-link-contracts.schema.json`.
+
+[source,bash]
+----
+npx deep-link-contracts --init
+npx deep-link-contracts --config deep-link-contracts.yml --site-dir ./build/site --fail
+----

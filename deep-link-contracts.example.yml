@@ -1,0 +1,12 @@
+# Marketing URL ↔ docs co-variance contracts.
+# NOT a general outbound link crawl — see @antora-supplemental/link-validator for that.
+version: 1
+description: Example deep-link contracts
+baseUrl: https://docs.example.com
+contracts:
+  - id: docs-foo-home
+    externalUrl: https://www.example.com/docs/foo
+    expected:
+      pageId: foo::index.adoc
+      pubPath: /foo/index.html
+    notes: Vanity / campaign path must keep landing on Foo module home

@@ -1,0 +1,50 @@
+{
+  "name": "@antora-supplemental/deep-link-contracts",
+  "version": "0.1.0",
+  "description": "CLI + config schema: marketing URL ↔ docs path co-variance tests (NOT general link crawl)",
+  "license": "MIT",
+  "author": "Ryan Johnson (https://github.com/AMDphreak)",
+  "keywords": [
+    "antora",
+    "deep-link",
+    "contracts",
+    "marketing",
+    "covariance"
+  ],
+  "homepage": "https://github.com/antora-supplemental/deep-link-contracts",
+  "bugs": {
+    "url": "https://github.com/antora-supplemental/deep-link-contracts/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antora-supplemental/deep-link-contracts.git"
+  },
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json",
+    "./schema": "./lib/schema.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "bin": {
+    "deep-link-contracts": "bin/deep-link-contracts.js"
+  },
+  "files": [
+    "bin/**/*",
+    "lib/**/*",
+    "schemas/**/*",
+    "README.adoc",
+    "CHANGELOG.adoc",
+    "LICENSE",
+    "deep-link-contracts.example.yml"
+  ],
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}
