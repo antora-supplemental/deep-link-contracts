@@ -3,6 +3,9 @@
 const path = require('node:path')
 const fs = require('node:fs')
 const { loadConfig, loadSiteIndex, checkContracts, buildReport, writeOutputs, exampleConfig } = require('../lib/index.js')
+const { createProgress } = require('../lib/progress.js')
+
+const TOOL = 'deep-link-contracts'
 
 function parseArgs (argv) {
   const opts = { config: 'deep-link-contracts.yml', out: 'deep-link-report', fail: false, siteDir: null, siteMap: null }
@@ -23,7 +26,7 @@ function parseArgs (argv) {
 function main () {
   const opts = parseArgs(process.argv)
   if (opts.help) {
-    console.log('Usage: deep-link-contracts --config FILE [--site-dir DIR|--site-map JSON] [--out DIR] [--fail]\n       deep-link-contracts --init\n\nMarketing URL ↔ docs path co-variance tests.\nThis is NOT a general outbound link crawler.\nSupport: support@devcentr.org')
+    console.log('Usage: deep-link-contracts --config FILE [--site-dir DIR|--site-map JSON] [--out DIR] [--fail]\n       deep-link-contracts --init\n\nMarketing URL → docs path co-variance tests.\nThis is NOT a general outbound link crawler.\nSupport: support@devcentr.org')
     process.exit(0)
   }
   if (opts.init) {
@@ -32,15 +35,20 @@ function main () {
     console.log('Wrote deep-link-contracts.yml')
     process.exit(0)
   }
+  const progress = createProgress({ id: TOOL, stream: process.stderr })
+  progress.starting('starting deep-link contract check')
   const cfg = loadConfig(path.resolve(opts.config))
+  progress.checking((cfg.contracts || []).length, 'contracts')
   const index = loadSiteIndex({
     siteMap: opts.siteMap && path.resolve(opts.siteMap),
     siteDir: opts.siteDir && path.resolve(opts.siteDir),
   })
-  const { results, findings } = checkContracts(cfg, index)
+  const { results, findings } = checkContracts(cfg, index, {
+    onProgress (i, total) { progress.tick(i, total) },
+  })
   const report = buildReport({ cfg, results, findings })
   writeOutputs(report, path.resolve(opts.out))
-  console.log('deep-link-contracts: ' + report.summary.ok + '/' + report.summary.contracts + ' ok, ' + report.summary.broken + ' broken')
+  progress.done(report.summary.ok + '/' + report.summary.contracts + ' ok, ' + report.summary.broken + ' broken')
   if (opts.fail && report.summary.broken > 0) process.exit(1)
 }
 main()

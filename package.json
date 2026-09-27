@@ -1,6 +1,6 @@
 {
   "name": "@antora-supplemental/deep-link-contracts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CLI + config schema: marketing URL ↔ docs path co-variance tests (NOT general link crawl)",
   "license": "MIT",
   "author": "Ryan Johnson (https://github.com/AMDphreak)",
